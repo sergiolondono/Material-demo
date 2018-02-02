@@ -7,3 +7,39 @@
  >Show details</mat-checkbox>
 
  <div *ngIf="showDetails.checked">Some details....</div>
+
+ <br>
+ <mat-divider></mat-divider>
+ <br>
+
+ <mat-radio-group [(value)]="selectedGenre">
+   <mat-radio-button *ngFor="let genre of genres" [value]="genre.id">{{ genre.name }}</mat-radio-button>
+ </mat-radio-group>
+
+ <br>
+<mat-divider></mat-divider>
+<br>
+
+ <mat-form-field>
+     <mat-select [(value)]="selectedCity" placeholder="Capital Cities">
+         <mat-option *ngFor="let city of cities" [value]="city.value">{{ city.name }}</mat-option>
+     </mat-select>
+ </mat-form-field>
+
+ <br>
+ <mat-divider></mat-divider>
+ <br>
+
+<mat-input-container>
+    <input 
+    ngModel
+    #username="ngModel"
+    name="username"
+    type="text" matInput placeholder="Username" required>
+    <mat-hint>Type a unique username.</mat-hint>
+    <span matSuffix>@domain.com</span>
+    <span matPrefix>admin.</span>
+    <mat-error *ngIf="username.invalid && username.errors.required">
+        The username field is required
+    </mat-error>
+</mat-input-container>
