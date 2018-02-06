@@ -43,3 +43,98 @@
         The username field is required
     </mat-error>
 </mat-input-container>
+
+<br>
+<mat-divider></mat-divider>
+<br>
+
+<mat-input-container>
+    <textarea matInput matTextareaAutosize></textarea>
+</mat-input-container>
+
+<br>
+<mat-divider></mat-divider>
+<br>
+
+<mat-form-field>
+    <input 
+    (focus)="picker.open()"
+    [min]="minDate"
+    [max]="maxDate"    
+    matInput [matDatepicker]="picker" placeholder="Choose a date">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker touchUi="true"></mat-datepicker>
+  </mat-form-field>
+
+  <br>
+  <mat-divider></mat-divider>
+  <br>
+
+  <mat-icon>add_alert</mat-icon>
+
+<br>
+<mat-divider></mat-divider>
+<br>
+
+<h3>Raised Buttons</h3>
+<div class="button-row">
+  <button mat-raised-button>Basic</button>
+  <button mat-raised-button color="primary">Primary</button>
+  <button mat-raised-button color="accent">Accent</button>
+  <button mat-raised-button color="warn">Warn</button>
+  <button mat-raised-button disabled>Disabled</button>
+  <a mat-raised-button routerLink=".">Link</a>
+  <button mat-fab color="primary"><mat-icon>check</mat-icon></button>
+</div>
+
+<br>
+<mat-divider></mat-divider>
+<br>
+
+<mat-chip-list>
+    <mat-chip 
+    *ngFor="let category of categories"
+    (click)="selectCategory(category)"
+    [selected]="category.selected"
+    class="chip">{{ category.name }}</mat-chip>
+</mat-chip-list>
+
+<br>
+<mat-divider></mat-divider>
+<br>
+
+<mat-progress-spinner 
+*ngIf="isLoading"
+mode="indeterminate"></mat-progress-spinner>
+
+<br>
+<mat-divider></mat-divider>
+<br>
+
+<span 
+matTooltip="Here is my tooltip"
+matTooltipPosition="right">Some text</span>
+
+<br>
+<mat-divider></mat-divider>
+<br>
+
+<mat-tab-group>
+    <mat-tab label="Billing">
+        Content of the billing tab
+    </mat-tab>
+    <mat-tab label="Shipping">
+        Content of the shipping tab
+    </mat-tab>
+    <mat-tab label="About">
+        Content of the about tab
+    </mat-tab>
+</mat-tab-group>
+
+<br>
+<mat-divider></mat-divider>
+<br>
+
+<button 
+(click)="openDialog()"
+mat-raised-button>Open Dialog</button>
