@@ -6,7 +6,6 @@ import { MatDialog, MatTableDataSource, MatPaginator, MatSort } from '@angular/m
 import { EditCourseComponent } from './edit-course/edit-course.component';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { UserService } from './services/user.service';
 import {DataSource} from '@angular/cdk/collections';
 import { User } from './models/user.model';
 
@@ -42,7 +41,7 @@ secondFormGroup: FormGroup;
 isLoading = false;
 
   constructor(private dialog: MatDialog, private _formBuilder: FormBuilder,
-    private http: HttpClient, private userService: UserService) {
+    private http: HttpClient) {
     this.isLoading = true;
     const users: UserData[] = [];
     for (let i = 1; i <= 100; i++) { users.push(createNewUser(i)); }
