@@ -9,6 +9,8 @@ import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { EditCourseComponent } from './edit-course/edit-course.component';
 import { MatComponentsModule } from './mat-components/mat-components.module';
+import { UserService } from './services/user.service';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -23,10 +25,12 @@ import { MatComponentsModule } from './mat-components/mat-components.module';
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
-    MatComponentsModule
+    MatComponentsModule,
+    HttpClientModule
   ],
   providers: [
     CourseService,
+    UserService,
     { provide: CourseService, useClass: CourseService }
   ],
   bootstrap: [AppComponent]
