@@ -17,13 +17,20 @@ import { User } from './models/user.model';
 export class AppComponent implements OnInit{
 
   displayedColumns = ['id', 'name', 'progress', 'color'];
+  displayedColumnsUsers = ['id', 'name', 'username', 'email'];
   dataSource: MatTableDataSource<UserData>;
+  dataSourceUsers: MatTableDataSource<Object>;
+  exampleDatabase: ExampleHttpDao | null;
+  data: GithubIssue[] = [];
+
+  resultsLength = 0;
+  isLoadingResults = true;
+  isRateLimitReached = false;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   ngOnInit() {
-    
     this.firstFormGroup = this._formBuilder.group({
       firstCtrl: ['', Validators.required]
     });
@@ -40,6 +47,8 @@ secondFormGroup: FormGroup;
 
 isLoading = false;
 
+usersOfService:any[];
+
   constructor(private dialog: MatDialog, private _formBuilder: FormBuilder,
     private http: HttpClient) {
     this.isLoading = true;
@@ -48,19 +57,22 @@ isLoading = false;
     this.dataSource = new MatTableDataSource(users);
   }
 
+
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+
+    this.dataSourceUsers.paginator = this.paginator;
+    this.dataSourceUsers.sort = this.sort;
   }
 
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
     this.dataSource.filter = filterValue;
-  }
 
-  private serviceUrl = 'https://jsonplaceholder.typicode.com/users';
-  
+    this.dataSourceUsers.filter = filterValue;
+  }  
 
   title = 'app';
   isChecked = true;
@@ -137,4 +149,35 @@ export interface UserData {
   name: string;
   progress: string;
   color: string;
+}
+
+export interface UserServiceData {
+  id: string;
+  name: string;
+  username: string;
+  email: string;
+}
+
+export class ExampleHttpDao {
+  constructor(private http: HttpClient) {}
+
+  getRepoIssues(sort: string, order: string, page: number): Observable<GithubApi> {
+    const href = 'https://api.github.com/search/issues';
+    const requestUrl =
+        `${href}?q=repo:angular/material2&sort=${sort}&order=${order}&page=${page + 1}`;
+
+    return this.http.get<GithubApi>(requestUrl);
+  }
+}
+
+export interface GithubApi {
+  items: GithubIssue[];
+  total_count: number;
+}
+
+export interface GithubIssue {
+  created_at: string;
+  number: string;
+  state: string;
+  title: string;
 }
