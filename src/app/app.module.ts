@@ -13,15 +13,18 @@ import { HttpClientModule } from '@angular/common/http';
 import { UsertableComponent } from './components/usertable/usertable.component';
 
 import { UserService } from './services/user.service';
+import { TableHttpExampleComponent } from './components/table-http-example/table-http-example.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     EditCourseComponent,
-    UsertableComponent
+    UsertableComponent,
+    TableHttpExampleComponent
   ],
   entryComponents: [
-    EditCourseComponent
+    EditCourseComponent,
+    TableHttpExampleComponent
   ],
   imports: [
     BrowserModule,
