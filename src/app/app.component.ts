@@ -9,6 +9,13 @@ import { HttpClient } from '@angular/common/http';
 import {DataSource} from '@angular/cdk/collections';
 import { User } from './models/user.model';
 
+import {of as observableOf} from 'rxjs/observable/of';
+import {catchError} from 'rxjs/operators/catchError';
+import {map} from 'rxjs/operators/map';
+import {merge} from 'rxjs/observable/merge';
+import {startWith} from 'rxjs/operators/startWith';
+import {switchMap} from 'rxjs/operators/switchMap';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -17,20 +24,13 @@ import { User } from './models/user.model';
 export class AppComponent implements OnInit{
 
   displayedColumns = ['id', 'name', 'progress', 'color'];
-  displayedColumnsUsers = ['id', 'name', 'username', 'email'];
   dataSource: MatTableDataSource<UserData>;
-  dataSourceUsers: MatTableDataSource<Object>;
-  exampleDatabase: ExampleHttpDao | null;
-  data: GithubIssue[] = [];
-
-  resultsLength = 0;
-  isLoadingResults = true;
-  isRateLimitReached = false;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-
+  
   ngOnInit() {
+    
     this.firstFormGroup = this._formBuilder.group({
       firstCtrl: ['', Validators.required]
     });
@@ -62,16 +62,12 @@ usersOfService:any[];
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
 
-    this.dataSourceUsers.paginator = this.paginator;
-    this.dataSourceUsers.sort = this.sort;
   }
 
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
     this.dataSource.filter = filterValue;
-
-    this.dataSourceUsers.filter = filterValue;
   }  
 
   title = 'app';
